@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>you, sir, are a chatbot, too</title>
+		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+		<script  src="sentences.js"></script>
+		<script  src="logic.js"></script>
+		<script>
+			[l, m, r, p] = splitSentence(choose());
+			
+		    document.addEventListener('alpine:init', () => {
+				Alpine.store('previous', {
+					list: []
+				});
+		        Alpine.store('current', {
+					last: l + m + r,
+					position: p,
+		            left: l,
+					mid: '',
+					right: r,
+					total: 0,
+					correct: 0
+		        });
+				isCorrect();
+		    });
+			
+			function isCorrect() {
+				if (sentences.includes(Alpine.store('current').left + Alpine.store('current').mid + Alpine.store('current').right)) {
+					document.getElementById('middle-chat').classList.remove('incorrect-input');
+					document.getElementById('middle-chat').classList.add('correct-input');
+				} else {
+					document.getElementById('middle-chat').classList.remove('correct-input');
+					document.getElementById('middle-chat').classList.add('incorrect-input');
+				}
+			}
+		</script>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body spellcheck="false" x-data="{ }">
+		<div id="prev-box" x-data="{  } ">
+			<template x-for="prev in $store.previous.list">
+				<div class="chat-box">
+					<div class="chat" x-text="prev.left"></div>
+					<div id="mid-prev" class="chat" x-text="prev.mid" :class="prev.correct ? 'correct-input' : 'incorrect-input' "></div>
+					<div class="chat" x-text="prev.right"></div>
+				</div>
+			</template>
+		</div>
+		
+		<div id="current-box" class="chat-box" x-data="{ }">
+			<div class="chat" id="left-chat" x-text="$store.current.left"></div>
+			<input id="middle-chat" @input="isCorrect()" @keyup.enter="update()" x-model="$store.current.mid" :size="$store.current.mid.length || 1" maxlength="7" class="chat">
+			<div class="chat" id="right-chat" x-text="$store.current.right"></div>
+		</div>
+		<div id="stats">
+			accuracy: <span style="font-weight: 500" x-text="!$store.current.total ? '0.0%' : (100 * $store.current.correct / $store.current.total).toFixed(1) + '%'"></span>
+		</div>
+	</body>
+</html>
