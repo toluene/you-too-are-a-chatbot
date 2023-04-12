@@ -13,7 +13,7 @@
 		<script  src="faq.js"></script>
 		<script  src="logic.js"></script>
 		<script>
-			[l, m, r, p] = splitSentence(choose());
+			[l, m, r, p] = splitSentence(choose(),1);
 			
 		    document.addEventListener('alpine:init', () => {
 				Alpine.store('previous', {
@@ -24,6 +24,7 @@
 					position: p,
 		            left: l,
 					mid: '',
+					trueMid: m,
 					right: r,
 					total: []
 				});
@@ -31,7 +32,7 @@
 					back: false
 				});
 				isCorrect();
-				document.getElementById("middle-chat").focus();
+				// document.getElementById("middle-chat").focus();
 				
 				if (location.hash) {
 					Alpine.store('window').back = true;
@@ -66,11 +67,11 @@
 				const base = 1.1;
 				let total = Alpine.store('current').total;
 				if (total.length == 0) {
-					return '0.0%';
+					return 0;
 				} else {
 					let upper = total.map((x, i) => x * Math.pow(base, -i));
 					let lower = total.map((_, i) => Math.pow(base, -i));
-					return (100 * upper.reduce((p,a) => p + a, 0) / lower.reduce((p,a) => p + a, 0)).toFixed(1) + '%';
+					return 100 * upper.reduce((p,a) => p + a, 0) / lower.reduce((p,a) => p + a, 0);
 				}
 			}
 		</script>
@@ -90,17 +91,17 @@
 		<div id="block"></div>
 		<div id="current-box" class="chat-box" x-data="{ }">
 			<div x-cloak class="chat" id="left-chat" x-text="$store.current.left"></div>
-			<input x-cloak id="middle-chat" autocorrect="off" @input="isCorrect()" @keyup.enter="update()" x-model="$store.current.mid" :size="$store.current.mid.length || 1" maxlength="7" class="chat">
+			<input autofocus x-cloak id="middle-chat" autocorrect="off" @input="isCorrect()" @keyup.enter="update()" x-model="$store.current.mid" :size="$store.current.mid.length || 1" :maxlength="$store.current.trueMid.length + 5" class="chat">
 			<div x-cloak class="chat" id="right-chat" x-text="$store.current.right"></div>
 		</div>
 		<div id="stats">
-			total accuracy: <b x-text="totalAccuracy()"></b> | weighted accuracy: <b x-text="weightedAccuracy()"></b>
+			total accuracy: <b x-text="totalAccuracy()"></b> | weighted accuracy: <b x-text="weightedAccuracy().toFixed(1) + '%'"></b>
 		</div>
 		<div id="sidebar" x-data="{ helpToggle: false }">
 			<a @click="helpToggle = !helpToggle">help</a> | <a @click="setTimeout(() => { $store.window.back = !$store.window.back }, 1000)" href="#faq">about/faq</a> | <a href="https://github.com/toluene/you-too-are-a-chatbot">github</a>
 			<div  x-show="helpToggle" id="help">
 				<br>
-				click the red box to enter text. try to guess the correct word. if a word is correct, the box color changes to green. press enter to get a new sentence. your last guesses are shown above your current sentence. if you can't seem to find a correct guess, just move on: you'll see a similar sentence soon.
+				click the red box to enter text. try to guess the correct word. if a word is correct, the box color changes to green. press enter to get a new sentence. your last guesses are shown above your current sentence. if you can't seem to find a correct guess, just move on: you'll see a similar sentence soon. after a while, you will occasionally be asked to guess longer phrases.
 			</div>
 		</div>
 		<div id="faq">
