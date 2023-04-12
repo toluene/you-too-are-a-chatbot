@@ -3,27 +3,24 @@ black #1C2321
 white #E6E1DB
 accent #723D46
 light accent #FE654F
-select #BCF8EC
 */
 
-@font-face {
-	font-family: RMono;
-	font-display: block;
-	src: url('roboto.ttf');
+
+[x-cloak] {
+	display: none !important;
 }
 
-@font-face {
-	font-family: RMono;
-	font-display: block;
-	font-style: italic;
-	src: url(robotoItal.ttf);
+html {
+	scroll-behavior: smooth;
 }
+
+
 
 body {
+	font-size: 12pt;
 	background-color: #E6E1DB;
 	color: #1C2321;
-	font-family: RMono;
-	text-transform: lowercase;
+	font-family: 'Roboto Mono';
 	overflow: hidden;
 }
 
@@ -51,6 +48,11 @@ body {
 	margin-right: -10px;
 	padding-left: 10px;
 	padding-right: 10px;
+
+	margin-top: 2px;
+	padding-bottom: 2px;
+	margin-bottom:2px;
+	padding-top:2px;
 }
 
 #middle-chat:focus {
@@ -94,12 +96,25 @@ body {
 	user-select: none;
 }
 
-#mid-prev {
+.mid-prev {
+	display: block;
+	/*font-size: 50pt;*/
+	border: none;
 	color: #E6E1DB;
+	font-family: inherit;
+	/*width: 100%;*/
+
 	margin-left: -10px;
 	margin-right: -10px;
 	padding-left: 10px;
 	padding-right: 10px;
+	margin-top: 2px;
+	padding-bottom: 2px;
+	
+	margin-bottom:2px;
+	padding-top:2px;
+	user-select: none;
+	pointer-events: none;
 }
 
 #prev-box .correct-input {
@@ -131,4 +146,87 @@ body {
 	top: 490px;
 	left: 200px;
 	color: #999691;
+}
+#stats b {
+	font-weight: 500;
+	color: #807d79;
+}
+
+#block {
+	/*height: 500px;*/
+}
+
+#sidebar {
+	position: absolute;
+	top: 190px;
+	left: 70vw;
+	width: 300px;
+}
+
+#sidebar a {
+	margin-top:2px;
+	margin-bottom:2px;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+a:hover {
+	background-color: #a8bab6;
+	color: #E6E1DB;
+}
+
+#faq {
+	font-family: 'Roboto';
+	color: #333230;
+	position: absolute;
+	top: 100%;
+	height: 100%;
+	width: 100%;
+	overflow: scroll;
+}
+
+#faq-container {
+	position: relative;
+	width: 50vw;
+	top: 130px;
+	left: 200px;
+	height: 120%;
+}
+
+#back {
+	position: fixed;
+	top: 130px;
+	left: 70vw;
+	display: block;
+	z-index: 2;
+}
+
+
+#faq a, b {
+	font-weight: 500;
+	color: #1C2321;
+}
+
+.q {
+	color: #1C2321;
+	font-weight: 600;
+}
+.a {
+	font-weight: 400;
+	padding-bottom: 50px;
+}
+.q::before {
+	content: "Q: ";
+}
+
+.a::before {
+	content: "A: ";
+}
+
+#footblock {
+	display: block;
+	height: 50px;
 }

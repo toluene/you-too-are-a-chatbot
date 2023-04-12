@@ -2,15 +2,22 @@
 <html>
 	<head>
 		<title>you, sir, are a chatbot, too</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
+		
 		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 		<script  src="sentences.js"></script>
+		<script  src="faq.js"></script>
 		<script  src="logic.js"></script>
 		<script>
 			[l, m, r, p] = splitSentence(choose());
 			
 		    document.addEventListener('alpine:init', () => {
 				Alpine.store('previous', {
-					list: []
+					list: [{left: l, mid: m, right: r, correct: true}]
 				});
 		        Alpine.store('current', {
 					last: l + m + r,
@@ -18,10 +25,20 @@
 		            left: l,
 					mid: '',
 					right: r,
-					total: 0,
-					correct: 0
-		        });
+					total: []
+				});
+				Alpine.store('window', {
+					back: false
+				});
 				isCorrect();
+				document.getElementById("middle-chat").focus();
+				
+				if (location.hash) {
+					Alpine.store('window').back = true;
+					document.getElementById(window.location.hash.substring(1)).scrollIntoView();
+				}
+				
+				// setTimeout(() => {  document.getElementById('body').style.display = "block" }, 10);
 		    });
 			
 			function isCorrect() {
@@ -33,27 +50,68 @@
 					document.getElementById('middle-chat').classList.add('incorrect-input');
 				}
 			}
+			
+			
+			
+			function totalAccuracy () {
+				let total = Alpine.store('current').total;
+				if (total.length == 0) {
+					return '0.0%';
+				} else {
+					return (100 * total.reduce((p,a) => p + a, 0) / total.length).toFixed(1) + '%';
+				}
+			}
+			
+			function weightedAccuracy () {
+				const base = 1.1;
+				let total = Alpine.store('current').total;
+				if (total.length == 0) {
+					return '0.0%';
+				} else {
+					let upper = total.map((x, i) => x * Math.pow(base, -i));
+					let lower = total.map((_, i) => Math.pow(base, -i));
+					return (100 * upper.reduce((p,a) => p + a, 0) / lower.reduce((p,a) => p + a, 0)).toFixed(1) + '%';
+				}
+			}
 		</script>
 		<link rel="stylesheet" href="style.css">
 	</head>
-	<body spellcheck="false" x-data="{ }">
-		<div id="prev-box" x-data="{  } ">
+	<body spellcheck="false" x-data="">
+		<div id="body">
+		<div id="prev-box" x-data="{  }">
 			<template x-for="prev in $store.previous.list">
 				<div class="chat-box">
-					<div class="chat" x-text="prev.left"></div>
-					<div id="mid-prev" class="chat" x-text="prev.mid" :class="prev.correct ? 'correct-input' : 'incorrect-input' "></div>
-					<div class="chat" x-text="prev.right"></div>
+					<div class="chat" x-cloak x-text="prev.left"></div>
+					<input class="mid-prev chat" x-cloak x-model="prev.mid" :class="prev.correct ? 'correct-input' : 'incorrect-input'" :size="prev.mid.length || 1">
+					<div class="chat" x-cloak x-text="prev.right"></div>
 				</div>
 			</template>
 		</div>
-		
+		<div id="block"></div>
 		<div id="current-box" class="chat-box" x-data="{ }">
-			<div class="chat" id="left-chat" x-text="$store.current.left"></div>
-			<input id="middle-chat" @input="isCorrect()" @keyup.enter="update()" x-model="$store.current.mid" :size="$store.current.mid.length || 1" maxlength="7" class="chat">
-			<div class="chat" id="right-chat" x-text="$store.current.right"></div>
+			<div x-cloak class="chat" id="left-chat" x-text="$store.current.left"></div>
+			<input x-cloak id="middle-chat" autocorrect="off" @input="isCorrect()" @keyup.enter="update()" x-model="$store.current.mid" :size="$store.current.mid.length || 1" maxlength="7" class="chat">
+			<div x-cloak class="chat" id="right-chat" x-text="$store.current.right"></div>
 		</div>
 		<div id="stats">
-			accuracy: <span style="font-weight: 500" x-text="!$store.current.total ? '0.0%' : (100 * $store.current.correct / $store.current.total).toFixed(1) + '%'"></span>
+			total accuracy: <b x-text="totalAccuracy()"></b> | weighted accuracy: <b x-text="weightedAccuracy()"></b>
+		</div>
+		<div id="sidebar" x-data="{ helpToggle: false }">
+			<a @click="helpToggle = !helpToggle">help</a> | <a @click="setTimeout(() => { $store.window.back = !$store.window.back }, 1000)" href="#faq">about/faq</a> | <a href="https://github.com/toluene/you-too-are-a-chatbot">github</a>
+			<div  x-show="helpToggle" id="help">
+				<br>
+				click the red box to enter text. try to guess the correct word. if a word is correct, the box color changes to green. press enter to get a new sentence. your last guesses are shown above your current sentence. if you can't seem to find a correct guess, just move on: you'll see a similar sentence soon.
+			</div>
+		</div>
+		<div id="faq">
+			<a x-cloak @click="$store.window.back = !$store.window.back" id="back" href="#" x-show="$store.window.back">↑ Alright. Take me back up</a>
+			<div id="faq-container">
+				<template x-for="qa in faq">
+					<span><div class="q" x-text="qa.q"></div><div class="a" x-init="$el.innerHTML = qa.a"></div></span>
+				</template>
+				<div id="footblock"></div>
+			</div>
+		</div>
 		</div>
 	</body>
 </html>

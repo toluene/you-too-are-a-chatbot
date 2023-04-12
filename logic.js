@@ -40,14 +40,16 @@ function update(previous) {
 	
 	if (correct) {
 		[l, m, r, p] = sentenceQueue.length ? sentenceQueue.shift() : splitSentence(choose());
-		current.correct++;
+		current.total.unshift(1);
 	} else {
 		let difficulty = Math.max(4 - sentenceQueue.length, 0);
 		for (i = 1; i <= getRandLessNot(difficulty); i++) {
 			sentenceQueue.push(splitSentence(choose()));
 		};
 		sentenceQueue.push(splitSentence(current.last, current.position));
+		// console.log(sentenceQueue.map((x) => x));
 		[l, m, r, p] = sentenceQueue.shift();
+		current.total.unshift(0);
 	}
 	
 	current.last = l + m + r;
@@ -55,8 +57,6 @@ function update(previous) {
 	current.mid = '';
 	current.right = r;
 	current.position = p;
-	
-	current.total++;
-	
+		
 	isCorrect();
 }

@@ -6,20 +6,21 @@ s --> inanimate, inanimVP.
 s --> not, animate, animVP.
 s --> not, inanimate, inanimVP.
 
-not --> [fu].
+not --> [pu].
 
-animate --> [kim].
-animate --> [dul].
-animate --> [rast].
-animate --> [dok].
+animate --> [gim].
+animate --> [set].
+animate --> [gest].
+animate --> [nol].
 
-complexV --> [nara].
-complexV --> [pomu].
+complexV --> [peli].
+complexV --> [nari].
 
 infP --> animI.
 infP --> inanimate, animTinanim.
 
-animI --> [sem].
+animI --> [irim].
+animI --> [erim].
 
 animVP --> complexV, infP.
 animVP --> animI.
@@ -28,13 +29,14 @@ animVP --> animTinanim, inanimate.
 
 animTanim --> complexV.
 
-animTinanim --> [gest].
-animTinanim --> [pak].
+animTinanim --> [nara].
+animTinanim --> [poro].
 
-inanimate --> [sup].
+inanimate --> [sep].
+inanimate --> [dok].
 inanimate --> [talm].
 
 inanimVP --> inanimI.
 
 inanimI --> [eln].
-inanimI --> [gok].
+inanimI --> [kaln].
