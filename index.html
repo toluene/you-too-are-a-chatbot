@@ -98,13 +98,13 @@
 			total accuracy: <b x-text="totalAccuracy()"></b> | weighted accuracy: <b x-text="weightedAccuracy().toFixed(1) + '%'"></b>
 		</div>
 		<div id="sidebar" x-data="{ helpToggle: false }">
-			<a @click="helpToggle = !helpToggle">help</a> | <a @click="setTimeout(() => { $store.window.back = !$store.window.back }, 1000)" href="#faq">about/faq</a> | <a href="https://github.com/toluene/you-too-are-a-chatbot">github</a>
+			<a @click="helpToggle = !helpToggle">help</a> | <a @click="setTimeout(() => { $store.window.back = !$store.window.back }, 1000)" href="#about">about</a> | <a href="https://github.com/toluene/you-too-are-a-chatbot">github</a>
 			<div  x-show="helpToggle" id="help">
 				<br>
 				click the red box to enter text. try to guess the correct word. if a word is correct, the box color changes to green. press enter to get a new sentence. your last guesses are shown above your current sentence. if you can't seem to find a correct guess, just move on: you'll see a similar sentence soon. after a while, you will occasionally be asked to guess longer phrases.
 			</div>
 		</div>
-		<div id="faq">
+		<div id="about">
 			<a x-cloak @click="$store.window.back = !$store.window.back" id="back" href="#" x-show="$store.window.back">↑ Alright. Take me back up</a>
 			<div id="faq-container">
 				<template x-for="qa in faq">

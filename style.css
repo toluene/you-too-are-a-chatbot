@@ -178,7 +178,7 @@ a:hover {
 	color: #E6E1DB;
 }
 
-#faq {
+#about {
 	font-family: 'Roboto';
 	color: #333230;
 	position: absolute;
@@ -186,11 +186,12 @@ a:hover {
 	height: 100%;
 	width: 100%;
 	overflow: scroll;
+	font-size: 13pt;
 }
 
 #faq-container {
 	position: relative;
-	width: 50vw;
+	width: 500px;
 	top: 130px;
 	left: 200px;
 	height: 120%;
@@ -199,13 +200,13 @@ a:hover {
 #back {
 	position: fixed;
 	top: 130px;
-	left: 70vw;
+	left: 750px;
 	display: block;
 	z-index: 2;
 }
 
 
-#faq a, b {
+#about a, b {
 	font-weight: 500;
 	color: #1C2321;
 }

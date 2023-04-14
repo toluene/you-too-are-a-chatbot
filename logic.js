@@ -40,13 +40,13 @@ function update(previous) {
 	
 	let level = 1;
 	let accuracy = weightedAccuracy();
-	if (current.total.length >= 10 && accuracy >= 80) {
+	if (current.total.length >= 7 && accuracy >= 80) {
 		level = 2;
 	}
-	if (current.total.length >= 16 && accuracy >= 85) {
+	if (current.total.length >= 15 && accuracy >= 85) {
 		level = 3;
 	}
-	if (current.total.length >= 22 && accuracy >= 90) {
+	if (current.total.length >= 23 && accuracy >= 90) {
 		level = 4;
 	}
 
