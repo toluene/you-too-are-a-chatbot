@@ -9,8 +9,10 @@ main :- findall(Y,string(Y), List),
 string(Y) :- s(X, []), atomic_list_concat(X, ' ', Y).
 
 s --> animate, animVP.
+s --> animate, cVP.
 s --> inanimate, inanimVP.
 s --> [pu], animate, animVP.
+s --> [mi], animate, cVP.
 s --> [mi], inanimate, inanimVP.
 s --> [mi], animate, animI.
 
@@ -29,7 +31,7 @@ animI --> [irim].
 animI --> [erim].
 animI --> [yril].
 
-animVP --> complexV, infP.
+cVP --> complexV, infP.
 animVP --> animI.
 animVP --> animTanim, animate.
 animVP --> animTinanim, inanimate.
