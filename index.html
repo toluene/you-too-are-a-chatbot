@@ -34,7 +34,7 @@
 				isCorrect();
 				// document.getElementById("middle-chat").focus();
 				
-				if (location.hash) {
+				if (window.location.hash.substring(1) == "about") {
 					Alpine.store('window').back = true;
 					setTimeout(() => { document.getElementById(window.location.hash.substring(1)).scrollIntoView() }, 10);
 				}
@@ -64,7 +64,7 @@
 			}
 			
 			function weightedAccuracy () {
-				const base = 1.1;
+				const base = 1.08;
 				let total = Alpine.store('current').total;
 				if (total.length == 0) {
 					return 0;
@@ -95,7 +95,7 @@
 			<div x-cloak class="chat" id="right-chat" x-text="$store.current.right"></div>
 		</div>
 		<div id="stats">
-			# prompts answered <b x-text="$store.current.total.length"></b> | total accuracy: <b x-text="totalAccuracy()"></b> | weighted accuracy: <b x-text="weightedAccuracy().toFixed(1) + '%'"></b>
+			# prompts answered: <b x-text="$store.current.total.length"></b> | total accuracy: <b x-text="totalAccuracy()"></b> | weighted accuracy: <b x-text="weightedAccuracy().toFixed(1) + '%'"></b>
 		</div>
 		<div id="sidebar" x-data="{ helpToggle: false }">
 			<a @click="helpToggle = !helpToggle">help</a> | <a @click="setTimeout(() => { $store.window.back = !$store.window.back }, 1000)" href="#about">about</a> | <a href="https://github.com/toluene/you-too-are-a-chatbot">github</a>

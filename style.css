@@ -187,6 +187,7 @@ a:hover {
 	width: 100%;
 	overflow: scroll;
 	font-size: 13pt;
+	text-align: justify;
 }
 
 #faq-container {

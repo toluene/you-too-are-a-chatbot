@@ -1,5 +1,5 @@
 function choose() {
-	let i = getRandLessNot(sentences.length)
+	let i = getRandLessNot(sentences.length);
 	return sentences[i];
 }
 		
