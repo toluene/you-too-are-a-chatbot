@@ -7,6 +7,7 @@ s --> not, animate, animVP.
 s --> not, inanimate, inanimVP.
 
 not --> [pu].
+not --> [mi].
 
 animate --> [gim].
 animate --> [set].
@@ -21,6 +22,7 @@ infP --> inanimate, animTinanim.
 
 animI --> [irim].
 animI --> [erim].
+animI --> [yril].
 
 animVP --> complexV, infP.
 animVP --> animI.
@@ -31,6 +33,7 @@ animTanim --> complexV.
 
 animTinanim --> [nara].
 animTinanim --> [poro].
+animTinanim --> [yro].
 
 inanimate --> [sep].
 inanimate --> [dok].
@@ -40,3 +43,4 @@ inanimVP --> inanimI.
 
 inanimI --> [eln].
 inanimI --> [kaln].
+inanimI --> [yln].
