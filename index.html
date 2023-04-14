@@ -95,7 +95,7 @@
 			<div x-cloak class="chat" id="right-chat" x-text="$store.current.right"></div>
 		</div>
 		<div id="stats">
-			total accuracy: <b x-text="totalAccuracy()"></b> | weighted accuracy: <b x-text="weightedAccuracy().toFixed(1) + '%'"></b>
+			# prompts answered <b x-text="$store.current.total.length"></b> | total accuracy: <b x-text="totalAccuracy()"></b> | weighted accuracy: <b x-text="weightedAccuracy().toFixed(1) + '%'"></b>
 		</div>
 		<div id="sidebar" x-data="{ helpToggle: false }">
 			<a @click="helpToggle = !helpToggle">help</a> | <a @click="setTimeout(() => { $store.window.back = !$store.window.back }, 1000)" href="#about">about</a> | <a href="https://github.com/toluene/you-too-are-a-chatbot">github</a>
